@@ -14,8 +14,13 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::latest()->paginate(5);
+        return veiw ('students.index',compact.('students'));
+          ->with('i',(request()->input('page' , 1) - 1) * 5);
+
+        
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +29,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return  veiw ('students.create ');
     }
 
     /**
@@ -35,7 +40,13 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $request->validate([
+           'stu_name' => 'required',
+           'course' => 'required',
+           'fee' => 'required'
+       ]);
+       return redirect ->route('students.index')
+       ->with('sucess','Students created sucessfully.');
     }
 
     /**
@@ -46,7 +57,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+      return veiw ('students.show',compact('student')); //
     }
 
     /**
@@ -57,7 +68,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return veiw ('students.edit',compact('student'));
     }
 
     /**
@@ -69,7 +80,14 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+
+        ]);
+        $student->update($request->all());
+        return redirect ->route('students.index')
+        ->with('sucess','Student updated sucessfully');
+
+
     }
 
     /**
@@ -80,6 +98,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+      $student->delete();
+      return redirect ->route('students.index')
+      ->with('sucess','Student deleted sucessfully.');
     }
 }
