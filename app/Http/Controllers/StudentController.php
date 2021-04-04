@@ -12,6 +12,7 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         $students = Student::latest()->paginate(5);
@@ -19,7 +20,7 @@ class StudentController extends Controller
           ->with('i',(request()->input('page' , 1) - 1) * 5);
 
         
-    }
+    }  
 
 
     /**
