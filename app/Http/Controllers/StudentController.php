@@ -19,8 +19,8 @@ class StudentController extends Controller
         return veiw ('students.index',compact.('students'));
           ->with('i',(request()->input('page' , 1) - 1) * 5);
 
-        
-    }  
+       
+    }
 
 
     /**
